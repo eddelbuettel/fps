@@ -1,0 +1,5 @@
+importFrom("rvest", "html_table", "html_nodes")
+importFrom("xml2", "read_html")
+importFrom("data.table", "rbindlist", "setnames", "tstrsplit")
+importFrom("utils", "head")
+export("getFidelity")
