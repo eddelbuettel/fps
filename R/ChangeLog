@@ -1,0 +1,7 @@
+2018-04-05  Dirk Eddelbuettel  <edd@debian.org>
+
+	* fidelity.R (getFidelity): Also parse and return date
+
+2018-04-04  Dirk Eddelbuettel  <edd@debian.org>
+
+	* fidelity.R (getFidelity): First version

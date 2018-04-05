@@ -18,20 +18,25 @@ getFidelity <- function() {
     ## ... and then remove the others leading each subsection
     l <- l[ !grepl("^Fund.*Name", FundName), ]
 
+    ## fetch date
+    currdate <- as.Date(rowone[[3]], "AS\tOF %m/%d/%Y")
+
     ## split off name and symbol
     l[, c("Name", "Symbol") := tstrsplit(FundName, "\n\t\t\t\t")]
     l[, FundName := NULL]
-    l[, Symbol:=gsub("[()]", "", Symbol)]
+    l[, Symbol := gsub("[()]", "", Symbol)]
+    l[, Date := as.IDate(currdate)]
 
     setnames(l, 1, "NAV")
     setnames(l, 2, "Change")
     l[, Change := gsub("\\+", "", Change)]
-    l <- l[, .(Name, Symbol, NAV, Change)]
+    l <- l[, .(Date, Name, Symbol, NAV, Change)]
     l <- l[, head(.SD,1), by=Symbol]
     l <- l[ !is.na(Change) & !is.na(NAV),]
-    l <- l[ , NAV := as.numeric(NAV)]
+    l[ , NAV := as.numeric(NAV)]
     l <- l[ !is.na(NAV) , ]
-    l <- l[, Change:=as.numeric(Change)]
+    l[, Change:=as.numeric(Change)]
+
 
     l
 }
